@@ -32,9 +32,18 @@ const typeDefs = gql`
   }
 
   type Query {
-    launches: [Launch]!
+    launches( 
+      pageSize: Int
+      after: String
+    ): LaunchConnection!
     launch(id: ID!): Launch
     me: User
+  }
+
+  type LaunchConnection { # add this below the Query type as an additional type.
+    cursor: String!
+    hasMore: Boolean!
+    launches: [Launch]!
   }
 
   type Mutation {
@@ -48,7 +57,7 @@ const typeDefs = gql`
     message: String
     launches: [Launch]
   }
-  
+
 `;
 
 module.exports = typeDefs;
